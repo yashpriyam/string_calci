@@ -33,6 +33,10 @@ describe('StringCalculator', () => {
         const calc = new StringCalculator();
         expect(calc.add('//;\n1;2')).toBe(3);
     });
-    
+
+    it('7th: should handle custom delimiter of any length', () => {
+        const calc = new StringCalculator();
+        expect(calc.add('//[***]\n1***2***3')).toBe(6);
+    });
     
 });
