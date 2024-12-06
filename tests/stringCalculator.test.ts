@@ -53,4 +53,9 @@ describe('StringCalculator', () => {
         const calc = new StringCalculator();
         expect(() => calc.add('1,a,3')).toThrow('Invalid input: "a" is not a number.');
     });
+
+    it('11th: should throw error if empty delimiter definition is provided', () => {
+        const calc = new StringCalculator();
+        expect(() => calc.add('//\n1,2')).toThrow('Invalid delimiter definition');
+    });
 });
