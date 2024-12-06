@@ -48,5 +48,9 @@ describe('StringCalculator', () => {
         const calc = new StringCalculator();
         expect(() => calc.add('1,-2,3,-4')).toThrow('Negatives not allowed: -2, -4');
     });
-    
+
+    it('10th: should throw error if invalid (non-numeric) token is found', () => {
+        const calc = new StringCalculator();
+        expect(() => calc.add('1,a,3')).toThrow('Invalid input: "a" is not a number.');
+    });
 });
