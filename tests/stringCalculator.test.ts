@@ -39,4 +39,9 @@ describe('StringCalculator', () => {
         expect(calc.add('//[***]\n1***2***3')).toBe(6);
     });
     
+    it('8th: should handle multiple custom delimiters', () => {
+        const calc = new StringCalculator();
+        expect(calc.add('//[*][%]\n1*2%3')).toBe(6);
+    });
+    
 });
