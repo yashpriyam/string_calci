@@ -26,7 +26,11 @@ export class StringCalculator {
         const pattern = new RegExp(delimiters.map(d => this.escapeRegExp(d)).join('|'));
         const parts = input.split(pattern).filter(x => x !== '');
         const nums = parts.map(n => parseInt(n, 10));
-        return nums.reduce((sum, val) => sum + val, 0);
+        const negatives = nums.filter(x => x < 0);
+        if (negatives.length > 0) {
+            throw new Error(`Negatives not allowed: ${negatives.join(', ')}`);
+        }
+        return nums.reduce((sum, val) => sum + (val > 1000 ? 0 : val), 0);
     }
 
     private escapeRegExp(s: string): string {
