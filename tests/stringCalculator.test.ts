@@ -44,4 +44,9 @@ describe('StringCalculator', () => {
         expect(calc.add('//[*][%]\n1*2%3')).toBe(6);
     });
     
+    it('9th: should raise an exception for negative numbers', () => {
+        const calc = new StringCalculator();
+        expect(() => calc.add('1,-2,3,-4')).toThrow('Negatives not allowed: -2, -4');
+    });
+    
 });
