@@ -1,6 +1,6 @@
 export class StringCalculator {
     private static readonly DEFAULT_DELIMITERS = [',', '\n'];
-    private static readonly CUSTOM_DELIMITER_PATTERN = /^\/\/(.+)\n(.*)$/;
+    private static readonly CUSTOM_DELIMITER_PATTERN = /^\/\/(.*?)\n(.*)$/;
     private static readonly MULTI_DELIMITER_PATTERN = /\[(.*?)\]/g;
     private static readonly MAX_NUMBER = 1000;
 
