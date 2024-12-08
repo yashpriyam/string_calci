@@ -25,37 +25,53 @@ describe('StringCalculator', () => {
     });
 
     it('5th: should handle newline as a delimiter along with commas', () => {
-        const calc = new StringCalculator();
-        expect(calc.add('1\n2,3')).toBe(6);
+        expect(calculator.add('1\n2,3')).toBe(6);
     });
 
     it('6th: should handle custom single-character delimiters', () => {
-        const calc = new StringCalculator();
-        expect(calc.add('//;\n1;2')).toBe(3);
+        expect(calculator.add('//;\n1;2')).toBe(3);
     });
 
     it('7th: should handle custom delimiter of any length', () => {
-        const calc = new StringCalculator();
-        expect(calc.add('//[***]\n1***2***3')).toBe(6);
+        expect(calculator.add('//[***]\n1***2***3')).toBe(6);
     });
-    
+
     it('8th: should handle multiple custom delimiters', () => {
-        const calc = new StringCalculator();
-        expect(calc.add('//[*][%]\n1*2%3')).toBe(6);
+        expect(calculator.add('//[*][%]\n1*2%3')).toBe(6);
     });
-    
+
     it('9th: should raise an exception for negative numbers', () => {
-        const calc = new StringCalculator();
-        expect(() => calc.add('1,-2,3,-4')).toThrow('Negatives not allowed: -2, -4');
+        expect(() => calculator.add('1,-2,3,-4')).toThrow('Negatives not allowed: -2, -4');
     });
 
     it('10th: should throw error if invalid (non-numeric) token is found', () => {
-        const calc = new StringCalculator();
-        expect(() => calc.add('1,a,3')).toThrow('Invalid input: "a" is not a number.');
+        expect(() => calculator.add('1,a,3')).toThrow('Invalid input: "a" is not a number.');
+    });
+    
+    it('11th: should throw error if empty delimiter definition is provided', () => {
+        expect(() => calculator.add('//\n1,2')).toThrow('Invalid delimiter definition');
     });
 
-    it('11th: should throw error if empty delimiter definition is provided', () => {
-        const calc = new StringCalculator();
-        expect(() => calc.add('//\n1,2')).toThrow('Invalid delimiter definition');
+    it('12th: should ignore1 numbers greater than 1000', () => {
+        expect(calculator.add('2,1001,3')).toBe(5);
+    });
+
+    it('13th: should return 0 if custom delimiter is defined but no numbers provided', () => {
+        expect(calculator.add('//;\n')).toBe(0);
+    });
+
+    it('14th: should handle consecutive newlines correctly', () => {
+        // Multiple newlines that result in empty tokens are just filtered out
+        expect(calculator.add('1\n\n2,3')).toBe(6);
+    });
+
+    it('15th: should handle multiple delimiters even if one is empty brackets (malformed)', () => {
+        expect(() => calculator.add('//[***][]\n1***2')).toThrow('Invalid delimiter definition: empty delimiter found.');
+    });
+
+    it('16th: should handle large inputs', () => {
+        const largeInput = Array.from({length: 100}, (_, i) => i+1).join(',');
+        // sum of 1 to 100 = 5050
+        expect(calculator.add(largeInput)).toBe(5050);
     });
 });
